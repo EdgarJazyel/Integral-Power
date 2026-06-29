@@ -14,11 +14,11 @@
 
 <div id="particles-js"></div>
 
-<header>
+<header class="sobre-particulas">
   <div class="logo">∫ Integral Power</div>
 </header>
 
-<section id="pantalla-inicio" class="pantalla activa">
+<section id="pantalla-inicio" class="pantalla activa sobre-particulas">
   <div class="hero">
     <div class="hero-content">
       <h1>Integral Power</h1>
@@ -29,25 +29,20 @@
   <div class="menu-navegacion card">
     <h2>¿A dónde vamos, we?</h2>
     <div class="menu-grid">
-      <button class="btn-menu" onclick="cambiarPantalla('pantalla-teoria')">📚 Teoría</button>
       <button class="btn-menu" onclick="cambiarPantalla('pantalla-metodos')">🛠️ Métodos</button>
       <button class="btn-menu" onclick="cambiarPantalla('pantalla-calculadora')">🧮 Calculadora</button>
-      <button class="btn-menu" onclick="cambiarPantalla('pantalla-fisica')">⚙️ Física</button>
       <button class="btn-menu" onclick="cambiarPantalla('pantalla-practica')">🎮 Práctica</button>
       <button class="btn-menu btn-contacto" onclick="cambiarPantalla('pantalla-contacto')">📞 Contacto</button>
     </div>
   </div>
-</section>
 
-<section id="pantalla-teoria" class="pantalla">
-  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
   <div class="card">
     <h2>¿Qué es una integral?</h2>
     <p>Una integral sirve para encontrar áreas, acumulaciones o recuperar una función original a partir de su derivada. Es la operación inversa de la derivada.</p>
   </div>
 </section>
 
-<section id="pantalla-metodos" class="pantalla">
+<section id="pantalla-metodos" class="pantalla sobre-particulas">
   <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
   <div class="card">
     <h2>Métodos de Integración</h2>
@@ -56,9 +51,11 @@
       <div class="metodo-card">
         <h3>1. Regla de la Potencia</h3>
         <p>La base de todo. Sumas 1 al exponente y divides entre ese nuevo número.</p>
-        <div class="formula-box">
+        <div class="formula-box" style="margin-bottom: 15px;">
           <p>∫xⁿ dx = <sup>xⁿ⁺¹</sup> / <sub>(n + 1)</sub> + C</p>
         </div>
+        <button onclick="resolverPotencia()">Ver Ejemplo</button>
+        <div id="resultadoPotencia" class="resultado oculto"></div>
       </div>
 
       <div class="metodo-card">
@@ -79,7 +76,7 @@
   </div>
 </section>
 
-<section id="pantalla-calculadora" class="pantalla">
+<section id="pantalla-calculadora" class="pantalla sobre-particulas">
   <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
   <div class="card">
     <h2>Calculadora Mágica</h2>
@@ -95,25 +92,7 @@
   </div>
 </section>
 
-<section id="pantalla-fisica" class="pantalla">
-  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
-  <div class="card">
-    <h2>Aplicaciones Reales: Estática y Dinámica</h2>
-    <p>En ingeniería, las integrales no son solo letras; son herramientas indispensables:</p>
-    <div class="metodo-grid">
-      <div class="metodo-card">
-        <h3>Centros de Masa</h3>
-        <p>Localiza el punto exacto de equilibrio de figuras y sólidos.</p>
-      </div>
-      <div class="metodo-card">
-        <h3>Trabajo y Energía</h3>
-        <p>El trabajo mecánico se calcula resolviendo <b>W = ∫ F(x) dx</b>.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="pantalla-practica" class="pantalla">
+<section id="pantalla-practica" class="pantalla sobre-particulas">
   <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
   <div class="card">
     <h2>Zona de Práctica</h2>
@@ -127,7 +106,7 @@
   </div>
 </section>
 
-<section id="pantalla-contacto" class="pantalla">
+<section id="pantalla-contacto" class="pantalla sobre-particulas">
   <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
   <div class="card">
     <h2>Ponte en Contacto</h2>
@@ -145,15 +124,15 @@
 
       <div class="mapa-box">
         <h3>Nuestra Ubicación:</h3>
-        <iframe src="https://maps.google.com/maps?q=Instituto+Tecnol%C3%B3gico+de+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="250" style="border:0; border-radius: 15px;" allowfullscreen="" loading="lazy"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3702.4346141323385!2d-102.26189532470716!3d21.8804561584288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429ee628ec23499%3A0xc6cf60b0fc321cd4!2sInstituto%20Tecnol%C3%B3gico%20de%20Aguascalientes!5e0!3m2!1ses-419!2smx!4v1717000000000!5m2!1ses-419!2smx" width="100%" height="250" style="border:0; border-radius: 15px;" allowfullscreen="" loading="lazy"></iframe>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
+<footer class="sobre-particulas">
   <p>“T E --- A M O O O --- P R I N C I P E --- M O S H O O ” 🚀</p>
-  <p style="font-size: 0.8rem; margin-top: 10px; color: #555;">&copy; 2026 Integral Power. Todos los derechos reservados por el dev más perro.</p>
+  <p style="font-size: 0.8rem; margin-top: 10px; color: #555;">© 2026 Integral Power. Todos los derechos reservados.</p>
 </footer>
 
 <script src="codigo.js"></script>
