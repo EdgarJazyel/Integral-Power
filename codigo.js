@@ -1,28 +1,41 @@
+// 1. Inicialización de Efecto de Partículas en el Fondo
+particlesJS("particles-js", {
+  "particles": {
+    "number": { "value": 70, "density": { "enable": true, "value_area": 900 } },
+    "color": { "value": "#7df9ff" },
+    "shape": { "type": "circle" },
+    "opacity": { "value": 0.3 },
+    "size": { "value": 2.5 },
+    "line_linked": { "enable": true, "distance": 140, "color": "#7f00ff", "opacity": 0.3, "width": 1 },
+    "move": { "enable": true, "speed": 1.5, "direction": "none", "straight": false }
+  },
+  "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" } } },
+  "retina_detect": true
+});
+
 function irCalculadora() {
-  document.getElementById("calculadora").scrollIntoView({
-    behavior: "smooth"
-  });
+  document.getElementById("calculadora").scrollIntoView({ behavior: "smooth" });
 }
+
+// Control global del lienzo de la gráfica
+let graficoInstancia = null;
 
 function calcularIntegral() {
   let expresion = document.getElementById("expresion").value;
   let resultado = document.getElementById("resultado");
 
-  // Limpiamos espacios
   expresion = expresion.replace(/\s/g, "").toLowerCase();
 
-  // Regex perrón: acepta opcionalmente signos +/-, coeficiente, la 'x', el '^' opcional y el exponente (ej. -5x^3 o 4x2)
   let regex = /^([-+]?\d*)x\^?([-+]?\d+)$/;
   let partes = expresion.match(regex);
 
   resultado.classList.remove("oculto");
 
   if (!partes) {
-    resultado.innerHTML = "<p style='color: #ff4c4c;'>⚠️ Formato incorrecto. Intenta con algo como <b>4x^3</b>, <b>-5x2</b> o <b>x4</b>.</p>";
+    resultado.innerHTML = "<p style='color: #ff4c4c;'>⚠️ Revisa el formato. Intenta usar algo como: 4x^3, -2x5 o x2.</p>";
     return;
   }
 
-  // Parseo inteligente de coeficientes (si está vacío o es un simple '-', lo ajustamos)
   let coefStr = partes[1];
   let coeficiente = 1;
   if (coefStr === "-") coeficiente = -1;
@@ -32,19 +45,14 @@ function calcularIntegral() {
 
   if (exponente === -1) {
     let coefFormat = coeficiente === 1 ? "" : (coeficiente === -1 ? "-" : coeficiente);
-    resultado.innerHTML = `
-      <h3 style="color: #7df9ff;">Resultado:</h3>
-      <p style="font-size: 1.2rem;"><b>∫ ${expresion} dx = ${coefFormat}ln|x| + C</b></p>
-      <hr style="border: 0.5px solid rgba(255,255,255,0.2); margin: 10px 0;">
-      <p>💡 <b>Regla especial:</b> La integral de x⁻¹ (o 1/x) es el logaritmo natural del valor absoluto de x.</p>
-    `;
+    resultado.innerHTML = `<h3>Resultado:</h3><p><b>${coefFormat}ln|x| + C</b></p>`;
+    generarGrafica(coeficiente, exponente, true);
     return;
   }
 
   let nuevoExponente = exponente + 1;
-  
-  // Simplificación visual de la fracción final
   let fraccionHTML = "";
+  
   if (coeficiente % nuevoExponente === 0) {
     let cociente = coeficiente / nuevoExponente;
     let cocienteFormat = cociente === 1 ? "" : (cociente === -1 ? "-" : cociente);
@@ -54,72 +62,122 @@ function calcularIntegral() {
   }
 
   resultado.innerHTML = `
-    <h3 style="color: #7df9ff;">Resultado Final:</h3>
-    <p style="font-size: 1.5rem; margin: 10px 0;"><b>${fraccionHTML} + C</b></p>
-    
-    <hr style="border: 0.5px solid rgba(255,255,255,0.2); margin: 15px 0;">
-    <h3 style="color: #b56cff;">Procedimiento paso a paso:</h3>
-    <ul style="list-style-type: none; padding: 0;">
-      <li style="margin-bottom: 8px;"><b>1.</b> Identificamos <b>n</b> (exponente) = ${exponente} y <b>a</b> (coeficiente) = ${coeficiente}.</li>
-      <li style="margin-bottom: 8px;"><b>2.</b> Sumamos 1 al exponente: ${exponente} + 1 = <b>${nuevoExponente}</b>.</li>
-      <li style="margin-bottom: 8px;"><b>3.</b> Dividimos todo entre el nuevo exponente: ${coeficiente} / ${nuevoExponente}.</li>
-      <li style="margin-bottom: 8px;"><b>4.</b> Agregamos la constante de integración <b>C</b>.</li>
-    </ul>
+    <h3 style="color: #7df9ff;">Resultado:</h3>
+    <p style="font-size: 1.4rem;"><b>${fraccionHTML} + C</b></p>
   `;
+
+  // Renderizar comportamiento de la curva en la gráfica
+  generarGrafica(coeficiente, exponente, false);
 }
 
-// Lógica de juego / práctica
-let puntos = 0;
-
-function verificarRespuesta() {
-  let respuesta = document.getElementById("respuesta").value;
-  let mensaje = document.getElementById("mensaje");
-
-  respuesta = respuesta.replace(/\s/g, "").toLowerCase();
-
-  // Aceptamos variaciones comunes
-  if (
-    respuesta === "8x7/7+c" ||
-    respuesta === "8x^7/7+c" ||
-    respuesta === "(8x7)/7+c" ||
-    respuesta === "(8x^7)/7+c"
-  ) {
-    puntos += 10;
-    mensaje.style.color = "#00ff7f";
-    mensaje.innerHTML = "¡Correcto, we! Ganaste 10 puntos de XP. 🚀";
-  } else {
-    mensaje.style.color = "#ff4c4c";
-    mensaje.innerHTML = "Mmm... no es correcto. Recuerda la regla: suma 1 al exponente y divide.";
+// 2. Lógica para trazar y rellenar el área bajo la curva con Chart.js
+function generarGrafica(coef, exp, esLogaritmica) {
+  const ctx = document.getElementById('graficaIntegral').getContext('2d');
+  
+  if (graficoInstancia) {
+    graficoInstancia.destroy();
   }
 
+  const valoresX = [];
+  const valoresY = [];
+
+  if (esLogaritmica) {
+    for (let x = 0.5; x <= 5; x += 0.2) {
+      valoresX.push(x.toFixed(1));
+      valoresY.push(coef * Math.log(x));
+    }
+  } else {
+    for (let x = -3; x <= 3; x += 0.2) {
+      valoresX.push(x.toFixed(1));
+      valoresY.push(coef * Math.pow(x, exp));
+    }
+  }
+
+  graficoInstancia = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: valoresX,
+      datasets: [{
+        label: esLogaritmica ? 'F(x) = ln|x|' : `f(x) = ${coef}x^${exp}`,
+        data: valoresY,
+        borderColor: '#00d4ff',
+        backgroundColor: 'rgba(0, 212, 255, 0.15)',
+        fill: true,
+        tension: 0.2,
+        pointRadius: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: '#fff' } } },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#bbb' } },
+        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#bbb' } }
+      }
+    }
+  });
+}
+
+// 3. Solucionador Matemático de Matrices por Eliminación de Gauss-Jordan
+function resolverGaussJordan() {
+  let sistema = [
+    [parseFloat(document.getElementById("a00").value || 0), parseFloat(document.getElementById("a01").value || 0), parseFloat(document.getElementById("a02").value || 0), parseFloat(document.getElementById("b0").value || 0)],
+    [parseFloat(document.getElementById("a10").value || 0), parseFloat(document.getElementById("a11").value || 0), parseFloat(document.getElementById("a12").value || 0), parseFloat(document.getElementById("b1").value || 0)],
+    [parseFloat(document.getElementById("a20").value || 0), parseFloat(document.getElementById("a21").value || 0), parseFloat(document.getElementById("a22").value || 0), parseFloat(document.getElementById("b2").value || 0)]
+  ];
+
+  let contenedor = document.getElementById("resultadoGauss");
+  contenedor.classList.remove("oculto");
+
+  let n = 3;
+  for (let i = 0; i < n; i++) {
+    let pivote = sistema[i][i];
+    if (Math.abs(pivote) < 0.00001) {
+      contenedor.innerHTML = "<p style='color: #ff4c4c;'>⚠️ Error: Pivote nulo detectado. El sistema no cuenta con una solución única directa.</p>";
+      return;
+    }
+
+    for (let j = i; j <= n; j++) {
+      sistema[i][j] /= pivote;
+    }
+
+    for (let k = 0; k < n; k++) {
+      if (k !== i) {
+        let factor = sistema[k][i];
+        for (let j = i; j <= n; j++) {
+          sistema[k][j] -= factor * sistema[i][j];
+        }
+      }
+    }
+  }
+
+  let solX = sistema[0][3].toFixed(2);
+  let solY = sistema[1][3].toFixed(2);
+  let solZ = sistema[2][3].toFixed(2);
+
+  contenedor.innerHTML = `
+    <h3 style="color: #7df9ff;">Matriz Identidad Reducida:</h3>
+    <p>| 1  0  0  :  <b>${solX}</b> |</p>
+    <p>| 0  1  0  :  <b>${solY}</b> |</p>
+    <p>| 0  0  1  :  <b>${solZ}</b> |</p>
+    <br>
+    <h3 style="color: #b56cff;">Soluciones del Sistema:</h3>
+    <p><b>x</b> = ${solX} &nbsp;&nbsp;|&nbsp;&nbsp; <b>y</b> = ${solY} &nbsp;&nbsp;|&nbsp;&nbsp; <b>z</b> = ${solZ}</p>
+  `;
+}
+
+let puntos = 0;
+function verificarRespuesta() {
+  let respuesta = document.getElementById("respuesta").value.replace(/\s/g, "").toLowerCase();
+  let mensaje = document.getElementById("mensaje");
+
+  if (["8x7/7+c", "8x^7/7+c", "(8x7)/7+c", "(8x^7)/7+c"].includes(respuesta)) {
+    puntos += 10;
+    mensaje.style.color = "#00ff7f";
+    mensaje.innerHTML = "¡Excelente, we! Tu resultado es matemáticamente correcto. +10 XP";
+  } else {
+    mensaje.style.color = "#ff4c4c";
+    mensaje.innerHTML = "Ese no es el valor. No olvides dividir por el exponente incrementado.";
+  }
   document.getElementById("puntos").innerText = puntos;
-}
-
-function resolverSustitucion() {
-  let div = document.getElementById("resultadoSustitucion");
-  div.classList.toggle("oculto");
-  div.innerHTML = `
-    <p><b>Integral:</b> ∫ (3x² + 2)(x³ + 2x − 1)⁵ dx</p>
-    <br>
-    <p><b>1.</b> u = x³ + 2x − 1</p>
-    <p><b>2.</b> du = (3x² + 2)dx</p>
-    <p><b>3.</b> Sustituimos: ∫ u⁵ du</p>
-    <p><b>4.</b> Integramos: u⁶ / 6 + C</p>
-    <p style="color: #7df9ff; margin-top: 10px;"><b>Resultado:</b> (x³ + 2x − 1)⁶ / 6 + C</p>
-  `;
-}
-
-function resolverPartes() {
-  let div = document.getElementById("resultadoPartes");
-  div.classList.toggle("oculto");
-  div.innerHTML = `
-    <p><b>Integral:</b> ∫ x eˣ dx</p>
-    <br>
-    <p><b>1.</b> Asignamos variables según ILATE:</p>
-    <p style="margin-left: 15px;">u = x  => du = dx</p>
-    <p style="margin-left: 15px;">dv = eˣ dx => v = eˣ</p>
-    <p><b>2.</b> Usamos la fórmula: uv − ∫ v du</p>
-    <p><b>3.</b> x eˣ − ∫ eˣ dx</p>
-    <p style="color: #7df9ff; margin-top: 10px;"><b>Resultado:</b> x eˣ − eˣ + C</p>
-  `;
 }
