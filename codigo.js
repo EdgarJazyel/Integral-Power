@@ -1,3 +1,18 @@
+// 🔥 Función Maestra para cambiar de pantallas (Navegación)
+function cambiarPantalla(idPantallaDestino) {
+  // 1. Buscamos todas las pantallas y las apagamos
+  let pantallas = document.querySelectorAll('.pantalla');
+  pantallas.forEach(pantalla => {
+    pantalla.classList.remove('activa');
+  });
+
+  // 2. Prendemos solo la que el usuario quiere ver
+  let pantallaDestino = document.getElementById(idPantallaDestino);
+  pantallaDestino.classList.add('activa');
+
+  // 3. Subimos el scroll hasta arriba suavecito
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 // 1. Inicialización de Efecto de Partículas en el Fondo
 particlesJS("particles-js", {
   "particles": {
