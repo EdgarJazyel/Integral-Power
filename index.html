@@ -44,34 +44,69 @@
 
 <section id="pantalla-metodos" class="pantalla sobre-particulas">
   <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
+  
+  <div class="menu-navegacion card">
+    <h2>Selecciona un Método</h2>
+    <p style="margin-bottom: 20px;">Elige el método de integración que quieres estudiar a fondo:</p>
+    <div class="menu-grid">
+      <button class="btn-menu" onclick="cambiarPantalla('pantalla-metodo-potencia')">1️⃣ Regla de la Potencia</button>
+      <button class="btn-menu" onclick="cambiarPantalla('pantalla-metodo-sustitucion')">2️⃣ Sustitución</button>
+      <button class="btn-menu" onclick="cambiarPantalla('pantalla-metodo-partes')">3️⃣ Por Partes (ILATE)</button>
+    </div>
+  </div>
+</section>
+
+<section id="pantalla-metodo-potencia" class="pantalla sobre-particulas">
+  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-metodos')">⬅ Regresar a Métodos</button>
+  
   <div class="card">
-    <h2>Métodos de Integración</h2>
-    <div class="metodo-grid">
-      
-      <div class="metodo-card">
-        <h3>1. Regla de la Potencia</h3>
-        <p>La base de todo. Sumas 1 al exponente y divides entre ese nuevo número.</p>
-        <div class="formula-box" style="margin-bottom: 15px;">
-          <p>∫xⁿ dx = <sup>xⁿ⁺¹</sup> / <sub>(n + 1)</sub> + C</p>
-        </div>
-        <button onclick="resolverPotencia()">Ver Ejemplo</button>
-        <div id="resultadoPotencia" class="resultado oculto"></div>
-      </div>
+    <h2>Regla de la Potencia</h2>
+    <p>La base de todo. Sumas 1 al exponente y divides entre ese nuevo número.</p>
+    
+    <div class="formula-box" style="margin-bottom: 15px;">
+      <p>∫xⁿ dx = <sup>xⁿ⁺¹</sup> / <sub>(n + 1)</sub> + C</p>
+    </div>
+    
+    <button onclick="resolverPotencia()">Ver Ejemplo</button>
+    <div id="resultadoPotencia" class="resultado oculto"></div>
 
-      <div class="metodo-card">
-        <h3>2. Sustitución</h3>
-        <p>Ideal cuando una función aparece multiplicada por su derivada (Cambio de variable).</p>
-        <button onclick="resolverSustitucion()">Ver Ejemplo</button>
-        <div id="resultadoSustitucion" class="resultado oculto"></div>
-      </div>
+    <div style="margin-top: 30px; border-top: 1px solid rgba(125, 249, 255, 0.2); padding-top: 20px;">
+      <h3>Teoría Completa</h3>
+      <p><i>(Aquí puedes soltar todo el texto, explicaciones y desarrollo que necesites para este método).</i></p>
+    </div>
+  </div>
+</section>
 
-      <div class="metodo-card">
-        <h3>3. Por Partes (ILATE)</h3>
-        <p>Fórmula salvavidas: <b>∫ u dv = uv − ∫ v du</b></p>
-        <button onclick="resolverPartes()">Ver Ejemplo</button>
-        <div id="resultadoPartes" class="resultado oculto"></div>
-      </div>
+<section id="pantalla-metodo-sustitucion" class="pantalla sobre-particulas">
+  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-metodos')">⬅ Regresar a Métodos</button>
+  
+  <div class="card">
+    <h2>Integración por Sustitución</h2>
+    <p>Ideal cuando una función aparece multiplicada por su derivada (Cambio de variable).</p>
+    
+    <button onclick="resolverSustitucion()">Ver Ejemplo</button>
+    <div id="resultadoSustitucion" class="resultado oculto"></div>
 
+    <div style="margin-top: 30px; border-top: 1px solid rgba(125, 249, 255, 0.2); padding-top: 20px;">
+      <h3>Teoría Completa</h3>
+      <p><i>(Aquí puedes agregar paso a paso cómo elegir "u" y "du").</i></p>
+    </div>
+  </div>
+</section>
+
+<section id="pantalla-metodo-partes" class="pantalla sobre-particulas">
+  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-metodos')">⬅ Regresar a Métodos</button>
+  
+  <div class="card">
+    <h2>Integración Por Partes (ILATE)</h2>
+    <p>Fórmula salvavidas: <b>∫ u dv = uv − ∫ v du</b></p>
+    
+    <button onclick="resolverPartes()">Ver Ejemplo</button>
+    <div id="resultadoPartes" class="resultado oculto"></div>
+
+    <div style="margin-top: 30px; border-top: 1px solid rgba(125, 249, 255, 0.2); padding-top: 20px;">
+      <h3>Teoría Completa</h3>
+      <p><i>(Aquí explicas a detalle la regla de Inversa, Logarítmica, Algebraica, Trigonométrica y Exponencial).</i></p>
     </div>
   </div>
 </section>
