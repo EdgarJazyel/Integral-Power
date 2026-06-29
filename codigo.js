@@ -118,54 +118,37 @@ function generarGrafica(coef, exp, esLogaritmica) {
   });
 }
 
-// 3. Solucionador Matemático de Matrices por Eliminación de Gauss-Jordan
-function resolverGaussJordan() {
-  let sistema = [
-    [parseFloat(document.getElementById("a00").value || 0), parseFloat(document.getElementById("a01").value || 0), parseFloat(document.getElementById("a02").value || 0), parseFloat(document.getElementById("b0").value || 0)],
-    [parseFloat(document.getElementById("a10").value || 0), parseFloat(document.getElementById("a11").value || 0), parseFloat(document.getElementById("a12").value || 0), parseFloat(document.getElementById("b1").value || 0)],
-    [parseFloat(document.getElementById("a20").value || 0), parseFloat(document.getElementById("a21").value || 0), parseFloat(document.getElementById("a22").value || 0), parseFloat(document.getElementById("b2").value || 0)]
-  ];
-
-  let contenedor = document.getElementById("resultadoGauss");
-  contenedor.classList.remove("oculto");
-
-  let n = 3;
-  for (let i = 0; i < n; i++) {
-    let pivote = sistema[i][i];
-    if (Math.abs(pivote) < 0.00001) {
-      contenedor.innerHTML = "<p style='color: #ff4c4c;'>⚠️ Error: Pivote nulo detectado. El sistema no cuenta con una solución única directa.</p>";
-      return;
-    }
-
-    for (let j = i; j <= n; j++) {
-      sistema[i][j] /= pivote;
-    }
-
-    for (let k = 0; k < n; k++) {
-      if (k !== i) {
-        let factor = sistema[k][i];
-        for (let j = i; j <= n; j++) {
-          sistema[k][j] -= factor * sistema[i][j];
-        }
-      }
-    }
-  }
-
-  let solX = sistema[0][3].toFixed(2);
-  let solY = sistema[1][3].toFixed(2);
-  let solZ = sistema[2][3].toFixed(2);
-
-  contenedor.innerHTML = `
-    <h3 style="color: #7df9ff;">Matriz Identidad Reducida:</h3>
-    <p>| 1  0  0  :  <b>${solX}</b> |</p>
-    <p>| 0  1  0  :  <b>${solY}</b> |</p>
-    <p>| 0  0  1  :  <b>${solZ}</b> |</p>
+// 🔥 AQUÍ ESTÁN LAS FUNCIONES QUE FALTABAN PARA LOS BOTONES 🔥
+function resolverSustitucion() {
+  let div = document.getElementById("resultadoSustitucion");
+  div.classList.toggle("oculto");
+  div.innerHTML = `
+    <p><b>Integral:</b> ∫ (3x² + 2)(x³ + 2x − 1)⁵ dx</p>
     <br>
-    <h3 style="color: #b56cff;">Soluciones del Sistema:</h3>
-    <p><b>x</b> = ${solX} &nbsp;&nbsp;|&nbsp;&nbsp; <b>y</b> = ${solY} &nbsp;&nbsp;|&nbsp;&nbsp; <b>z</b> = ${solZ}</p>
+    <p><b>1.</b> u = x³ + 2x − 1</p>
+    <p><b>2.</b> du = (3x² + 2)dx</p>
+    <p><b>3.</b> Sustituimos: ∫ u⁵ du</p>
+    <p><b>4.</b> Integramos: u⁶ / 6 + C</p>
+    <p style="color: #7df9ff; margin-top: 10px;"><b>Resultado:</b> (x³ + 2x − 1)⁶ / 6 + C</p>
   `;
 }
 
+function resolverPartes() {
+  let div = document.getElementById("resultadoPartes");
+  div.classList.toggle("oculto");
+  div.innerHTML = `
+    <p><b>Integral:</b> ∫ x eˣ dx</p>
+    <br>
+    <p><b>1.</b> Asignamos variables según ILATE:</p>
+    <p style="margin-left: 15px;">u = x  => du = dx</p>
+    <p style="margin-left: 15px;">dv = eˣ dx => v = eˣ</p>
+    <p><b>2.</b> Usamos la fórmula: uv − ∫ v du</p>
+    <p><b>3.</b> x eˣ − ∫ eˣ dx</p>
+    <p style="color: #7df9ff; margin-top: 10px;"><b>Resultado:</b> x eˣ − eˣ + C</p>
+  `;
+}
+
+// Zona de práctica
 let puntos = 0;
 function verificarRespuesta() {
   let respuesta = document.getElementById("respuesta").value.replace(/\s/g, "").toLowerCase();
