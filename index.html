@@ -16,86 +16,144 @@
 
 <header>
   <div class="logo">∫ Integral Power</div>
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#aprende">Teoría</a>
-    <a href="#calculadora">Calculadora</a>
-    <a href="#fisica">Física</a>
-    <a href="#algebra">Álgebra Lineal</a>
-    <a href="#practica">Práctica</a>
-  </nav>
 </header>
 
-<section id="inicio" class="hero">
-  <div class="hero-content">
-    <h1>Integral Power</h1>
-    <p>Aprende cálculo integral sin morir en el intento. La herramienta definitiva para tus clases de matemáticas.</p>
-    <button class="btn-glow" onclick="irCalculadora()">Empezar a Integrar</button>
-  </div>
-</section>
-
-<section id="aprende" class="card">
-  <h2>¿Qué es una integral?</h2>
-  <p>Una integral sirve para encontrar áreas, acumulaciones o recuperar una función original a partir de su derivada. Es la operación inversa de la derivada.</p>
-  
-  <div class="formula-box">
-    <h3>Regla de la Potencia</h3>
-    <p>∫xⁿ dx = <sup>xⁿ⁺¹</sup> / <sub>(n + 1)</sub> + C</p>
-    <small>Válido para todo n ≠ -1</small>
-  </div>
-</section>
-
-<section id="calculadora" class="card">
-  <h2>Calculadora Mágica</h2>
-  <p>Escribe un término algebraico. Soporta formatos como: <b>x4</b>, <b>5x^2</b>, o <b>-3x6</b>.</p>
-
-  <div class="input-group">
-    <input type="text" id="expresion" placeholder="Ejemplo: 8x^3" autocomplete="off">
-    <button onclick="calcularIntegral()">Resolver</button>
-  </div>
-
-  <div id="resultado" class="resultado oculto"></div>
-
-  <div class="chart-container" style="margin-top: 25px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px;">
-    <canvas id="graficaIntegral"></canvas>
-  </div>
-</section>
-
-<section id="metodos" class="card">
-  <h2>Métodos de Integración</h2>
-  
-  <div class="metodo-grid">
-    <div class="metodo-card">
-      <h3>Sustitución (Cambio de Variable)</h3>
-      <p>Ideal cuando una función aparece multiplicada por su derivada.</p>
-      <button onclick="resolverSustitucion()">Ver Ejemplo</button>
-      <div id="resultadoSustitucion" class="resultado oculto"></div>
+<section id="pantalla-inicio" class="pantalla activa">
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Integral Power</h1>
+      <p>Aprende cálculo integral sin morir en el intento. La herramienta definitiva.</p>
     </div>
-
-    <div class="metodo-card">
-      <h3>Por Partes (ILATE)</h3>
-      <p>Fórmula salvavidas: <b>∫ u dv = uv − ∫ v du</b></p>
-      <button onclick="resolverPartes()">Ver Ejemplo</button>
-      <div id="resultadoPartes" class="resultado oculto"></div>
+  </div>
+  
+  <div class="menu-navegacion card">
+    <h2>¿A dónde vamos, we?</h2>
+    <div class="menu-grid">
+      <button class="btn-menu" onclick="cambiarPantalla('pantalla-teoria')">📚 Teoría</button>
+      <button class="btn-menu" onclick="cambiarPantalla('pantalla-metodos')">🛠️ Métodos</button>
+      <button class="btn-menu" onclick="cambiarPantalla('pantalla-calculadora')">🧮 Calculadora</button>
+      <button class="btn-menu" onclick="cambiarPantalla('pantalla-fisica')">⚙️ Física</button>
+      <button class="btn-menu" onclick="cambiarPantalla('pantalla-practica')">🎮 Práctica</button>
+      <button class="btn-menu btn-contacto" onclick="cambiarPantalla('pantalla-contacto')">📞 Contacto</button>
     </div>
   </div>
 </section>
 
-<section id="practica" class="card">
-  <h2>Zona de Práctica</h2>
-  <p>Reto actual: Resuelve <b>∫ 8x⁶ dx</b></p>
-
-  <div class="input-group">
-    <input type="text" id="respuesta" placeholder="Tu respuesta (ej. 8x^7/7+c)" autocomplete="off">
-    <button onclick="verificarRespuesta()">Verificar</button>
+<section id="pantalla-teoria" class="pantalla">
+  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
+  <div class="card">
+    <h2>¿Qué es una integral?</h2>
+    <p>Una integral sirve para encontrar áreas, acumulaciones o recuperar una función original a partir de su derivada. Es la operación inversa de la derivada.</p>
   </div>
+</section>
 
-  <p id="mensaje" class="mensaje"></p>
-  <div class="marcador">Puntos de Experiencia: <span id="puntos">0</span> XP</div>
+<section id="pantalla-metodos" class="pantalla">
+  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
+  <div class="card">
+    <h2>Métodos de Integración</h2>
+    <div class="metodo-grid">
+      
+      <div class="metodo-card">
+        <h3>1. Regla de la Potencia</h3>
+        <p>La base de todo. Sumas 1 al exponente y divides entre ese nuevo número.</p>
+        <div class="formula-box">
+          <p>∫xⁿ dx = <sup>xⁿ⁺¹</sup> / <sub>(n + 1)</sub> + C</p>
+        </div>
+      </div>
+
+      <div class="metodo-card">
+        <h3>2. Sustitución</h3>
+        <p>Ideal cuando una función aparece multiplicada por su derivada (Cambio de variable).</p>
+        <button onclick="resolverSustitucion()">Ver Ejemplo</button>
+        <div id="resultadoSustitucion" class="resultado oculto"></div>
+      </div>
+
+      <div class="metodo-card">
+        <h3>3. Por Partes (ILATE)</h3>
+        <p>Fórmula salvavidas: <b>∫ u dv = uv − ∫ v du</b></p>
+        <button onclick="resolverPartes()">Ver Ejemplo</button>
+        <div id="resultadoPartes" class="resultado oculto"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="pantalla-calculadora" class="pantalla">
+  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
+  <div class="card">
+    <h2>Calculadora Mágica</h2>
+    <p>Escribe un término algebraico. Soporta formatos como: <b>x4</b>, <b>5x^2</b>, o <b>-3x6</b>.</p>
+    <div class="input-group">
+      <input type="text" id="expresion" placeholder="Ejemplo: 8x^3" autocomplete="off">
+      <button onclick="calcularIntegral()">Resolver</button>
+    </div>
+    <div id="resultado" class="resultado oculto"></div>
+    <div class="chart-container" style="margin-top: 25px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px;">
+      <canvas id="graficaIntegral"></canvas>
+    </div>
+  </div>
+</section>
+
+<section id="pantalla-fisica" class="pantalla">
+  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
+  <div class="card">
+    <h2>Aplicaciones Reales: Estática y Dinámica</h2>
+    <p>En ingeniería, las integrales no son solo letras; son herramientas indispensables:</p>
+    <div class="metodo-grid">
+      <div class="metodo-card">
+        <h3>Centros de Masa</h3>
+        <p>Localiza el punto exacto de equilibrio de figuras y sólidos.</p>
+      </div>
+      <div class="metodo-card">
+        <h3>Trabajo y Energía</h3>
+        <p>El trabajo mecánico se calcula resolviendo <b>W = ∫ F(x) dx</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pantalla-practica" class="pantalla">
+  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
+  <div class="card">
+    <h2>Zona de Práctica</h2>
+    <p>Reto actual: Resuelve <b>∫ 8x⁶ dx</b></p>
+    <div class="input-group">
+      <input type="text" id="respuesta" placeholder="Tu respuesta (ej. 8x^7/7+c)" autocomplete="off">
+      <button onclick="verificarRespuesta()">Verificar</button>
+    </div>
+    <p id="mensaje" class="mensaje"></p>
+    <div class="marcador">Puntos de Experiencia: <span id="puntos">0</span> XP</div>
+  </div>
+</section>
+
+<section id="pantalla-contacto" class="pantalla">
+  <button class="btn-regresar" onclick="cambiarPantalla('pantalla-inicio')">⬅ Regresar al Inicio</button>
+  <div class="card">
+    <h2>Ponte en Contacto</h2>
+    <p>¿Dudas con el código o necesitas ayuda en tu proyecto?</p>
+    
+    <div class="contacto-flex">
+      <div class="redes-box">
+        <a href="https://wa.me/5211234567890" target="_blank" class="btn-social whatsapp">
+          📱 Escríbeme por WhatsApp
+        </a>
+        <a href="mailto:tu-correo@gmail.com" class="btn-social email">
+          ✉️ Envíame un Correo
+        </a>
+      </div>
+
+      <div class="mapa-box">
+        <h3>Nuestra Ubicación:</h3>
+        <iframe src="https://maps.google.com/maps?q=Instituto+Tecnol%C3%B3gico+de+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="250" style="border:0; border-radius: 15px;" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
   <p>“T E --- A M O O O --- P R I N C I P E --- M O S H O O ” 🚀</p>
+  <p style="font-size: 0.8rem; margin-top: 10px; color: #555;">&copy; 2026 Integral Power. Todos los derechos reservados por el dev más perro.</p>
 </footer>
 
 <script src="codigo.js"></script>
