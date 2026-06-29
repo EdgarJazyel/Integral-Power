@@ -153,12 +153,14 @@ input:focus {
   box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
 }
 
-/* Interfaz Matricial */
+/* Interfaz Matricial Corregida */
 .matrix-container {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Centra toda la matriz */
   gap: 12px;
-  max-width: 450px;
+  width: 100%; 
+  overflow-x: auto; /* Por si lo abren en cel, que puedan hacer scroll horizontal */
   margin: 20px 0;
   background: rgba(0, 0, 0, 0.2);
   padding: 20px;
@@ -169,13 +171,17 @@ input:focus {
 .matrix-row {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  flex-wrap: nowrap; 
 }
 
 .matrix-row input {
-  width: 70px;
+  flex: none; }
+  width: 65px; 
   text-align: center;
-  padding: 10px;
+  padding: 10px 5px;
+  font-size: 1.1rem;
 }
 
 .divider {
