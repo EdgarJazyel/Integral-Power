@@ -3,15 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Integral Power | El Siguiente Nivel</title>
+  <title>Integral Power | Domina el Cálculo</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="estilos.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
-
-<div id="particles-js"></div>
 
 <header>
   <div class="logo">∫ Integral Power</div>
@@ -19,23 +15,22 @@
     <a href="#inicio">Inicio</a>
     <a href="#aprende">Teoría</a>
     <a href="#calculadora">Calculadora</a>
-    <a href="#fisica">Física</a>
-    <a href="#algebra">Álgebra Lineal</a>
+    <a href="#metodos">Métodos</a>
     <a href="#practica">Práctica</a>
   </nav>
 </header>
 
 <section id="inicio" class="hero">
   <div class="hero-content">
-    <h1>Integral Power V2</h1>
-    <p>La suite definitiva de herramientas de ingeniería. Cálculo, Álgebra y Física en un solo entorno.</p>
-    <button class="btn-glow" onclick="irCalculadora()">Abrir Calculadora</button>
+    <h1>Integral Power</h1>
+    <p>Aprende cálculo integral sin morir en el intento. La herramienta definitiva para tus clases de matemáticas.</p>
+    <button class="btn-glow" onclick="irCalculadora()">Empezar a Integrar</button>
   </div>
 </section>
 
 <section id="aprende" class="card">
   <h2>¿Qué es una integral?</h2>
-  <p>Una integral sirve para encontrar áreas bajo la curva, acumulaciones o recuperar una función original a partir de su derivada. Es el pilar fundamental del cálculo geométrico y de análisis.</p>
+  <p>Una integral sirve para encontrar áreas, acumulaciones o recuperar una función original a partir de su derivada. Es la operación inversa de la derivada.</p>
   
   <div class="formula-box">
     <h3>Regla de la Potencia</h3>
@@ -45,54 +40,35 @@
 </section>
 
 <section id="calculadora" class="card">
-  <h2>Calculadora de Integrales + Gráfica Interactiva</h2>
-  <p>Escribe un término algebraico (ej: <b>x4</b>, <b>5x^2</b>, o <b>-3x6</b>) y observa la gráfica de su comportamiento.</p>
+  <h2>Calculadora Mágica</h2>
+  <p>Escribe un término algebraico. Soporta formatos como: <b>x4</b>, <b>5x^2</b>, o <b>-3x6</b>.</p>
 
   <div class="input-group">
-    <input type="text" id="expresion" placeholder="Ejemplo: 2x^2" autocomplete="off">
-    <button onclick="calcularIntegral()">Resolver e Integrar</button>
+    <input type="text" id="expresion" placeholder="Ejemplo: 8x^3" autocomplete="off">
+    <button onclick="calcularIntegral()">Resolver</button>
   </div>
 
   <div id="resultado" class="resultado oculto"></div>
-  
-  <div class="chart-container">
-    <canvas id="graficaIntegral"></canvas>
-  </div>
 </section>
 
-<section id="fisica" class="card">
-  <h2>Aplicaciones Reales: Estática y Dinámica</h2>
-  <p>En ingeniería, las integrales no son solo letras; son herramientas indispensables para analizar fenómenos mecánicos físicos:</p>
+<section id="metodos" class="card">
+  <h2>Métodos de Integración</h2>
+  
   <div class="metodo-grid">
     <div class="metodo-card">
-      <h3>Determinación de Centros de Masa</h3>
-      <p>Permite localizar el punto exacto de equilibrio de figuras y sólidos con densidad homogénea o variable mediante la integración de momentos de fuerza.</p>
+      <h3>Sustitución (Cambio de Variable)</h3>
+      <p>Ideal cuando una función aparece multiplicada por su derivada.</p>
+      <button onclick="resolverSustitucion()">Ver Ejemplo</button>
+      <div id="resultadoSustitucion" class="resultado oculto"></div>
     </div>
-    <div class="metodo-card">
-      <h3>Cálculo de Trabajo y Energía</h3>
-      <p>Cuando una fuerza cambia a lo largo de una distancia (fricción variable, resortes o aceleración no uniforme), el trabajo mecánico se calcula resolviendo <b>W = ∫ F(x) dx</b>.</p>
-    </div>
-  </div>
-</section>
 
-<section id="algebra" class="card">
-  <h2>Calculadora Eliminación Gauss-Jordan</h2>
-  <p>Resuelve sistemas de ecuaciones lineales de 3x3 de manera inmediata. Introduce los coeficientes de tu matriz aumentada:</p>
-  
-  <div class="matrix-container">
-    <div class="matrix-row">
-      <input type="number" id="a00" placeholder="a11"> <input type="number" id="a01" placeholder="a12"> <input type="number" id="a02" placeholder="a13"> <span class="divider">|</span> <input type="number" id="b0" placeholder="b1">
-    </div>
-    <div class="matrix-row">
-      <input type="number" id="a10" placeholder="a21"> <input type="number" id="a11" placeholder="a22"> <input type="number" id="a12" placeholder="a23"> <span class="divider">|</span> <input type="number" id="b1" placeholder="b2">
-    </div>
-    <div class="matrix-row">
-      <input type="number" id="a20" placeholder="a31"> <input type="number" id="a21" placeholder="a32"> <input type="number" id="a22" placeholder="a33"> <span class="divider">|</span> <input type="number" id="b2" placeholder="b3">
+    <div class="metodo-card">
+      <h3>Por Partes (ILATE)</h3>
+      <p>Fórmula salvavidas: <b>∫ u dv = uv − ∫ v du</b></p>
+      <button onclick="resolverPartes()">Ver Ejemplo</button>
+      <div id="resultadoPartes" class="resultado oculto"></div>
     </div>
   </div>
-  
-  <button style="margin-top: 20px;" onclick="resolverGaussJordan()">Reducir Matriz</button>
-  <div id="resultadoGauss" class="resultado oculto"></div>
 </section>
 
 <section id="practica" class="card">
@@ -108,8 +84,17 @@
   <div class="marcador">Puntos de Experiencia: <span id="puntos">0</span> XP</div>
 </section>
 
+<section id="contacto" class="card">
+  <h2>¿Dudas con el código o las mates?</h2>
+  <form class="contact-form" onsubmit="event.preventDefault(); alert('¡Mensaje enviado, we!');">
+    <input type="text" placeholder="Tu nombre" required>
+    <input type="email" placeholder="Tu correo" required>
+    <button type="submit">Enviar Mensaje</button>
+  </form>
+</section>
+
 <footer>
-  <p>“T E --- A M O O O O --- P R I N C I P E --- M O S H O O ” 🚀</p>
+  <p>“Las matemáticas no son difíciles; solo necesitan una buena explicación y código limpio.” 🚀</p>
 </footer>
 
 <script src="codigo.js"></script>
