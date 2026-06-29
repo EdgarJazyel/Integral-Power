@@ -1,4 +1,4 @@
-// 🔥 Función Maestra para cambiar de pantallas (Navegación)
+// 🔥 Función Maestra para cambiar de pantallas (Navegación SPA)
 function cambiarPantalla(idPantallaDestino) {
   // 1. Buscamos todas las pantallas y las apagamos
   let pantallas = document.querySelectorAll('.pantalla');
@@ -13,6 +13,7 @@ function cambiarPantalla(idPantallaDestino) {
   // 3. Subimos el scroll hasta arriba suavecito
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 // 1. Inicialización de Efecto de Partículas en el Fondo
 particlesJS("particles-js", {
   "particles": {
@@ -133,7 +134,20 @@ function generarGrafica(coef, exp, esLogaritmica) {
   });
 }
 
-// 🔥 AQUÍ ESTÁN LAS FUNCIONES QUE FALTABAN PARA LOS BOTONES 🔥
+// 🔥 AQUÍ ESTÁN LAS FUNCIONES DE LOS 3 MÉTODOS 🔥
+function resolverPotencia() {
+  let div = document.getElementById("resultadoPotencia");
+  div.classList.toggle("oculto");
+  div.innerHTML = `
+    <p><b>Integral:</b> ∫ x³ dx</p>
+    <br>
+    <p><b>1.</b> Identificamos el exponente: n = 3</p>
+    <p><b>2.</b> Sumamos 1 al exponente: 3 + 1 = 4</p>
+    <p><b>3.</b> Dividimos entre el nuevo exponente: 4</p>
+    <p style="color: #7df9ff; margin-top: 10px;"><b>Resultado:</b> x⁴ / 4 + C</p>
+  `;
+}
+
 function resolverSustitucion() {
   let div = document.getElementById("resultadoSustitucion");
   div.classList.toggle("oculto");
