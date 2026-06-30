@@ -33,9 +33,7 @@ function irCalculadora() {
   document.getElementById("calculadora").scrollIntoView({ behavior: "smooth" });
 }
 
-// Control global del lienzo de la gráfica
-let graficoInstancia = null;
-
+// 2. Motor de la Calculadora (Sin gráfica)
 function calcularIntegral() {
   let expresion = document.getElementById("expresion").value;
   let resultado = document.getElementById("resultado");
@@ -62,7 +60,6 @@ function calcularIntegral() {
   if (exponente === -1) {
     let coefFormat = coeficiente === 1 ? "" : (coeficiente === -1 ? "-" : coeficiente);
     resultado.innerHTML = `<h3>Resultado:</h3><p><b>${coefFormat}ln|x| + C</b></p>`;
-    generarGrafica(coeficiente, exponente, true);
     return;
   }
 
@@ -81,57 +78,6 @@ function calcularIntegral() {
     <h3 style="color: #7df9ff;">Resultado:</h3>
     <p style="font-size: 1.4rem;"><b>${fraccionHTML} + C</b></p>
   `;
-
-  // Renderizar comportamiento de la curva en la gráfica
-  generarGrafica(coeficiente, exponente, false);
-}
-
-// 2. Lógica para trazar y rellenar el área bajo la curva con Chart.js
-function generarGrafica(coef, exp, esLogaritmica) {
-  const ctx = document.getElementById('graficaIntegral').getContext('2d');
-  
-  if (graficoInstancia) {
-    graficoInstancia.destroy();
-  }
-
-  const valoresX = [];
-  const valoresY = [];
-
-  if (esLogaritmica) {
-    for (let x = 0.5; x <= 5; x += 0.2) {
-      valoresX.push(x.toFixed(1));
-      valoresY.push(coef * Math.log(x));
-    }
-  } else {
-    for (let x = -3; x <= 3; x += 0.2) {
-      valoresX.push(x.toFixed(1));
-      valoresY.push(coef * Math.pow(x, exp));
-    }
-  }
-
-  graficoInstancia = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: valoresX,
-      datasets: [{
-        label: esLogaritmica ? 'F(x) = ln|x|' : `f(x) = ${coef}x^${exp}`,
-        data: valoresY,
-        borderColor: '#00d4ff',
-        backgroundColor: 'rgba(0, 212, 255, 0.15)',
-        fill: true,
-        tension: 0.2,
-        pointRadius: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { labels: { color: '#fff' } } },
-      scales: {
-        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#bbb' } },
-        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#bbb' } }
-      }
-    }
-  });
 }
 
 // 🔥 AQUÍ ESTÁN LAS FUNCIONES DE LOS 3 MÉTODOS 🔥
