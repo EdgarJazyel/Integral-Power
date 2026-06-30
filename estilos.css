@@ -65,28 +65,27 @@ nav a:hover {
   text-shadow: 0 0 10px rgba(125, 249, 255, 0.5);
 }
 
-/* Hero Section */
+/* ================== Hero Section (TÍTULO COMPACTO) ================== */
 .hero {
-  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 20px;
+  padding: 40px 20px 10px 20px;
 }
 
 .hero h1 {
-  font-size: 4rem;
+  font-size: 3.5rem;
   background: linear-gradient(90deg, #b56cff, #7f00ff, #00d4ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   animation: glow 2s infinite alternate;
 }
 
 .hero p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
   color: #b0b0c0;
 }
 
@@ -109,13 +108,13 @@ button:hover {
   box-shadow: 0 8px 25px rgba(0, 212, 255, 0.6);
 }
 
-/* Tarjetas (Glassmorphism) */
+/* ================== Tarjetas (Glassmorphism MÁS COMPACTO) ================== */
 .card {
   width: 90%;
   max-width: 900px;
-  margin: 40px auto;
-  padding: 40px;
-  border-radius: 24px;
+  margin: 15px auto;
+  padding: 25px;
+  border-radius: 20px;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -125,16 +124,16 @@ button:hover {
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
   border-color: rgba(125, 249, 255, 0.3);
 }
 
 .card h2 {
   color: #7df9ff;
-  margin-bottom: 20px;
-  font-size: 2rem;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
   border-bottom: 2px solid rgba(125, 249, 255, 0.2);
-  padding-bottom: 10px;
+  padding-bottom: 8px;
 }
 
 /* Inputs */
@@ -194,7 +193,7 @@ input:focus {
 .metodo-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* ESTO CENTRA A ILATE SI QUEDA ABAJO SOLITO */
+  justify-content: center;
   gap: 20px;
   margin-top: 20px;
 }
