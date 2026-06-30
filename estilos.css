@@ -22,6 +22,16 @@ body {
   min-height: 100vh;
   line-height: 1.6;
 }
+/* ================== FONDO DE PARTÍCULAS FIJO ================== */
+#particles-js {
+  position: fixed; /* Se queda anclado a la pantalla */
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: -1; /* El -1 es la magia: lo manda hasta el fondo de todo */
+  pointer-events: none; /* Para que no interfiera con los clics de tus botones */
+}
 
 /* ================== ASEGURAR QUE TODO FLOTE SOBRE LAS PARTÍCULAS ================== */
 .sobre-particulas {
